@@ -113,6 +113,6 @@ sudo snap install --classic code
 
 在linux平台使用wasd代替方向键resource/linux_show.gif
 
-![image](https://raw.githubusercontent.com/xiaoyu12139/snake/master/resource/linux_show.gif)
+![image](https://github.com/xiaoyu12139/snake/blob/master/resource/linux_show.gif)
 
-![image](https://raw.githubusercontent.com/xiaoyu12139/snake/master/resource/windows_show.gif)
+![image](https://github.com/xiaoyu12139/snake/blob/master/resource/windows_show.gif)
