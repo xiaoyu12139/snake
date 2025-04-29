@@ -67,7 +67,7 @@ void Food::DrawBigFood(Snake& csnake)//绘制限时食物
         big_y = tmp_y;
         SetCursorPosition(big_x, big_y);
         SetColor(18);
-        std::cout << "■" ;
+        std::cout << STR("■") ;
         big_flag = true;
         flash_flag = true;
         break;
@@ -90,7 +90,7 @@ void Food::FlashBigFood()//闪烁限时食物
     }
     else
     {
-        std::cout << "■" ;
+        std::cout << STR("■") ;
         flash_flag = true;
     }
 
