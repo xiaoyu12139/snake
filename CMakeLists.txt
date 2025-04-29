@@ -5,6 +5,8 @@ cmake_minimum_required (VERSION 3.8)
 project ("snake")
 set(CMAKE_CXX_STANDARD 20)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 if(WIN32)
 	message("windows")
 	# 如果支持，请为 MSVC 编译器启用热重载。

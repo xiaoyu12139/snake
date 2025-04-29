@@ -28,7 +28,7 @@ void Food::DrawFood(Snake& csnake)//ªÊ÷∆ ≥ŒÔ
         y = tmp_y;
         SetCursorPosition(x, y);
         SetColor(13);
-        std::cout << "°Ô" ;
+        std::cout << STR("°Ô") ;
         ++cnt;
         cnt %= 5;
         if (cnt == 0)

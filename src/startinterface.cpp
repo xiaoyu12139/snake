@@ -1,5 +1,10 @@
 #include "startinterface.h"
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <unistd.h>
+#endif
+#include "tools.h"
 
 
 void StartInterface::PrintFirst()//蛇从左边出现到完全出现的过程
@@ -7,7 +12,7 @@ void StartInterface::PrintFirst()//蛇从左边出现到完全出现的过程
     for (auto& point : startsnake)
     {
         point.Print();
-        Sleep(speed);
+        sleep(speed);
     }
 }
 
@@ -21,7 +26,7 @@ void StartInterface::PrintSecond()//蛇从左向右移动的过程
         startsnake.back().Print();
         startsnake.front().Clear();
         startsnake.pop_front();
-        Sleep(speed);
+        sleep(speed);
     }
 }
 
@@ -36,7 +41,11 @@ void StartInterface::PrintThird()//蛇从接触右边到消失的过程
         }
         ClearText();//清除已有文字
         PrintText();//绘制更新位置后的文字
-        Sleep(speed);
+        #ifdef _WIN32
+            Sleep(speed);
+        #else
+            usleep(speed * 1000);
+        #endif
     }
 }
 

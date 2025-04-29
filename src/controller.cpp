@@ -1,7 +1,12 @@
 #include <iostream>
 #include <time.h>
+#ifdef _WIN32
 #include <conio.h>
 #include <windows.h>
+#else
+#include <unistd.h>
+#include "conio_linux.h"
+#endif
 #include "controller.h"
 #include "tools.h"
 #include "startinterface.h"
@@ -21,7 +26,12 @@ void Controller::Start()//开始界面
     SetCursorPosition(13, 26);
     std::cout << "Press any key to start... " ;
     SetCursorPosition(13, 27);
+    #ifdef _WIN32
     system("pause");
+    #else
+    getch();
+    #endif
+
 }
 
 void Controller::Select()//选择界面
@@ -33,19 +43,19 @@ void Controller::Select()//选择界面
     SetCursorPosition(13, 27);
     std::cout << "                          " ;
     SetCursorPosition(6, 21);
-    std::cout << "请选择游戏难度：" ;
+    std::cout << STR("请选择游戏难度：") ;
     SetCursorPosition(6, 22);
-    std::cout << "(上下键选择,回车确认)" ;
+    std::cout << STR("(上下键选择,回车确认)") ;
     SetCursorPosition(27, 22);
     SetBackColor();//第一个选项设置背景色以表示当前选中
-    std::cout << "简单模式" ;
+    std::cout << STR("简单模式") ;
     SetCursorPosition(27, 24);
     SetColor(3);
-    std::cout << "普通模式" ;
+    std::cout << STR("普通模式") ;
     SetCursorPosition(27, 26);
-    std::cout << "困难模式" ;
+    std::cout << STR("困难模式") ;
     SetCursorPosition(27, 28);
-    std::cout << "炼狱模式" ;
+    std::cout << STR("炼狱模式") ;
     SetCursorPosition(0, 31);
     score = 0;
 
@@ -53,11 +63,11 @@ void Controller::Select()//选择界面
     int ch;//记录键入值
     key = 1;//记录选中项，初始选择第一个
     bool flag = false;//记录是否键入Enter键标记，初始置为否
-    while ((ch = getch()))
+    while ((ch = getKeyCode()))
     {
         switch (ch)//检测输入键
         {
-        case 72://UP上方向键
+        case KEY_UP://UP上方向键
             if (key > 1)//当此时选中项为第一项时，UP上方向键无效
             {
                 switch (key)
@@ -65,33 +75,33 @@ void Controller::Select()//选择界面
                 case 2:
                     SetCursorPosition(27, 22);//给待选中项设置背景色
                     SetBackColor();
-                    std::cout << "简单模式" ;
+                    std::cout << STR("简单模式") ;
 
                     SetCursorPosition(27, 24);//将已选中项取消我背景色
                     SetColor(3);
-                    std::cout << "普通模式" ;
+                    std::cout << STR("普通模式") ;
 
                     --key;
                     break;
                 case 3:
                     SetCursorPosition(27, 24);
                     SetBackColor();
-                    std::cout << "普通模式" ;
+                    std::cout << STR("普通模式") ;
 
                     SetCursorPosition(27, 26);
                     SetColor(3);
-                    std::cout << "困难模式" ;
+                    std::cout << STR("困难模式") ;
 
                     --key;
                     break;
                 case 4:
                     SetCursorPosition(27, 26);
                     SetBackColor();
-                    std::cout << "困难模式" ;
+                    std::cout << STR("困难模式") ;
 
                     SetCursorPosition(27, 28);
                     SetColor(3);
-                    std::cout << "炼狱模式" ;
+                    std::cout << STR("炼狱模式") ;
 
                     --key;
                     break;
@@ -99,7 +109,7 @@ void Controller::Select()//选择界面
             }
             break;
 
-        case 80://DOWN下方向键
+        case KEY_DOWN://DOWN下方向键
             if (key < 4)
             {
                 switch (key)
@@ -107,30 +117,30 @@ void Controller::Select()//选择界面
                 case 1:
                     SetCursorPosition(27, 24);
                     SetBackColor();
-                    std::cout << "普通模式" ;
+                    std::cout << STR("普通模式") ;
                     SetCursorPosition(27, 22);
                     SetColor(3);
-                    std::cout << "简单模式" ;
+                    std::cout << STR("简单模式") ;
 
                     ++key;
                     break;
                 case 2:
                     SetCursorPosition(27, 26);
                     SetBackColor();
-                    std::cout << "困难模式" ;
+                    std::cout << STR("困难模式") ;
                     SetCursorPosition(27, 24);
                     SetColor(3);
-                    std::cout << "普通模式" ;
+                    std::cout << STR("普通模式") ;
 
                     ++key;
                     break;
                 case 3:
                     SetCursorPosition(27, 28);
                     SetBackColor();
-                    std::cout << "炼狱模式" ;
+                    std::cout << STR("炼狱模式") ;
                     SetCursorPosition(27, 26);
                     SetColor(3);
-                    std::cout << "困难模式" ;
+                    std::cout << STR("困难模式") ;
 
                     ++key;
                     break;
@@ -138,7 +148,7 @@ void Controller::Select()//选择界面
             }
             break;
 
-        case 13://Enter回车键
+        case KEY_ENTER://Enter回车键
             flag = true;
             break;
         default://无效按键
@@ -170,7 +180,7 @@ void Controller::Select()//选择界面
 
 void Controller::DrawGame()//绘制游戏界面
 {
-    system("cls");//清屏
+    clearScreen();//清屏
 
     /*绘制地图*/
     SetColor(3);
@@ -183,35 +193,35 @@ void Controller::DrawGame()//绘制游戏界面
     SetCursorPosition(33, 1);
     std::cout << "Greedy Snake" ;
     SetCursorPosition(34, 2);
-    std::cout << "贪吃蛇" ;
+    std::cout << STR("贪吃蛇") ;
     SetCursorPosition(31, 4);
-    std::cout << "难度：" ;
+    std::cout << STR("难度：") ;
     SetCursorPosition(36, 5);
     switch (key)
     {
     case 1:
-        std::cout << "简单模式" ;
+        std::cout << STR("简单模式") ;
         break;
     case 2:
-        std::cout << "普通模式" ;
+        std::cout << STR("普通模式") ;
         break;
     case 3:
-        std::cout << "困难模式" ;
+        std::cout << STR("困难模式") ;
         break;
     case 4:
-        std::cout << "炼狱模式" ;
+        std::cout << STR("炼狱模式") ;
         break;
     default:
         break;
     }
     SetCursorPosition(31, 7);
-    std::cout << "得分：" ;
+    std::cout << STR("得分：") ;
     SetCursorPosition(37, 8);
     std::cout << "     0" ;
     SetCursorPosition(33, 13);
-    std::cout << " 方向键移动" ;
+    std::cout << STR(" 方向键移动") ;
     SetCursorPosition(33, 15);
-    std::cout << " ESC键暂停" ;
+    std::cout << STR(" ESC键暂停") ;
 }
 
 int Controller::PlayGame()//游戏二级循环
@@ -250,7 +260,26 @@ int Controller::PlayGame()//游戏二级循环
                 break;
             }
         }
-
+        //clear map
+        for(int x = 2; x < 30; x ++){
+            for (int y = 2; y < 30; y ++){
+                Point p(x,y);
+                bool flag = false;
+                for (auto& point : csnake->snake)
+                {
+                    if(p == point){
+                        flag = true;
+                    }
+                }
+                if(p.GetX() == cfood->x && p.GetY() == cfood->y){
+                    flag = true;
+                }
+                if(!flag){
+                    SetCursorPosition(x,y);
+                    std::cout << " ";
+                }
+            }
+        }
         if (csnake->GetFood(*cfood)) //吃到食物
         {
             csnake->Move();//蛇增长
@@ -274,8 +303,7 @@ int Controller::PlayGame()//游戏二级循环
         {
             cfood->FlashBigFood();
         }
-
-        Sleep(speed);//制造蛇的移动效果
+        sleep(speed);
     }
 
     /*蛇死亡*/
@@ -322,29 +350,41 @@ int Controller::Menu()//选择菜单
     /*绘制菜单*/
     SetColor(11);
     SetCursorPosition(32, 19);
-    std::cout << "菜单：" ;
-    Sleep(100);
+    std::cout << STR("菜单：") ;
+    #ifdef _WIN32
+        Sleep(100);
+    #else
+        usleep(100 * 1000);
+    #endif
     SetCursorPosition(34, 21);
     SetBackColor();
-    std::cout << "继续游戏" ;
-    Sleep(100);
+    std::cout << STR("继续游戏") ;
+    #ifdef _WIN32
+        Sleep(100);
+    #else
+        usleep(100 * 1000);
+    #endif
     SetCursorPosition(34, 23);
     SetColor(11);
-    std::cout << "重新开始" ;
-    Sleep(100);
+    std::cout << STR("重新开始") ;
+    #ifdef _WIN32
+        Sleep(100);
+    #else
+        usleep(100 * 1000);
+    #endif
     SetCursorPosition(34, 25);
-    std::cout << "退出游戏" ;
+    std::cout << STR("退出游戏") ;
     SetCursorPosition(0, 31);
 
     /*选择部分*/
     int ch;
     int tmp_key = 1;
     bool flag = false;
-    while ((ch = getch()))
+    while ((ch = getKeyCode()))
     {
         switch (ch)
         {
-        case 72://UP
+        case KEY_UP://UP
             if (tmp_key > 1)
             {
                 switch (tmp_key)
@@ -352,20 +392,20 @@ int Controller::Menu()//选择菜单
                 case 2:
                     SetCursorPosition(34, 21);
                     SetBackColor();
-                    std::cout << "继续游戏" ;
+                    std::cout << STR("继续游戏") ;
                     SetCursorPosition(34, 23);
                     SetColor(11);
-                    std::cout << "重新开始" ;
+                    std::cout << STR("重新开始") ;
 
                     --tmp_key;
                     break;
                 case 3:
                     SetCursorPosition(34, 23);
                     SetBackColor();
-                    std::cout << "重新开始" ;
+                    std::cout << STR("重新开始") ;
                     SetCursorPosition(34, 25);
                     SetColor(11);
-                    std::cout << "退出游戏" ;
+                    std::cout << STR("退出游戏") ;
 
                     --tmp_key;
                     break;
@@ -373,7 +413,7 @@ int Controller::Menu()//选择菜单
             }
             break;
 
-        case 80://DOWN
+        case KEY_DOWN://DOWN
             if (tmp_key < 3)
             {
                 switch (tmp_key)
@@ -381,20 +421,20 @@ int Controller::Menu()//选择菜单
                 case 1:
                     SetCursorPosition(34, 23);
                     SetBackColor();
-                    std::cout << "重新开始" ;
+                    std::cout << STR("重新开始") ;
                     SetCursorPosition(34, 21);
                     SetColor(11);
-                    std::cout << "继续游戏" ;
+                    std::cout << STR("继续游戏") ;
 
                     ++tmp_key;
                     break;
                 case 2:
                     SetCursorPosition(34, 25);
                     SetBackColor();
-                    std::cout << "退出游戏" ;
+                    std::cout << STR("退出游戏") ;
                     SetCursorPosition(34, 23);
                     SetColor(11);
-                    std::cout << "重新开始" ;
+                    std::cout << STR("重新开始") ;
 
                     ++tmp_key;
                     break;
@@ -402,7 +442,7 @@ int Controller::Menu()//选择菜单
             }
             break;
 
-        case 13://Enter
+        case KEY_ENTER://Enter
             flag = true;
             break;
 
@@ -441,7 +481,7 @@ void Controller::Game()//游戏一级循环
         int tmp = PlayGame();//开启游戏循环，当重新开始或退出游戏时，结束循环并返回值给tmp
         if (tmp == 1) //返回值为1时重新开始游戏
         {
-            system("cls");
+            clearScreen();
             continue;
         }
         else if (tmp == 2) //返回值为2时退出游戏
@@ -458,93 +498,92 @@ void Controller::Game()//游戏一级循环
 int Controller::GameOver()//游戏结束界面
 {
     /*绘制游戏结束界面*/
-    Sleep(500);
+    sleep(500);
     SetColor(11);
     SetCursorPosition(10, 8);
     std::cout << "━━━━━━━━━━━━━━━━━━━━━━" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 9);
     std::cout << " ┃               Game Over !!!              ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 10);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 11);
-    std::cout << " ┃              很遗憾！你挂了              ┃" ;
-    Sleep(30);
+    std::cout << STR(" ┃              很遗憾！你挂了              ┃") ;
+    sleep(30);
     SetCursorPosition(9, 12);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 13);
-    std::cout << " ┃             你的分数为：                 ┃" ;
+    std::cout << STR(" ┃             你的分数为：                 ┃") ;
     SetCursorPosition(24, 13);
     std::cout << score ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 14);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 15);
-    std::cout << " ┃   是否再来一局？                         ┃" ;
-    Sleep(30);
+    std::cout << STR(" ┃   是否再来一局？                         ┃") ;
+    sleep(30);
     SetCursorPosition(9, 16);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 17);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 18);
-    std::cout << " ┃    嗯，好的        不了，还是学习有意思  ┃" ;
-    Sleep(30);
+    std::cout << STR(" ┃    嗯，好的        不了，还是学习有意思  ┃") ;
+    sleep(30);
     SetCursorPosition(9, 19);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(9, 20);
     std::cout << " ┃                                          ┃" ;
-    Sleep(30);
+    sleep(30);
     SetCursorPosition(10, 21);
     std::cout << "━━━━━━━━━━━━━━━━━━━━━━" ;
-
-    Sleep(100);
+    sleep(100);
     SetCursorPosition(12, 18);
     SetBackColor();
-    std::cout << "嗯，好的" ;
+    std::cout << STR("嗯，好的") ;
     SetCursorPosition(0, 31);
 
     /*选择部分*/
     int ch;
     int tmp_key = 1;
     bool flag = false;
-    while ((ch = getch()))
+    while ((ch = getKeyCode()))
     {
         switch (ch)
         {
-        case 75://LEFT
+        case KEY_LEFT://LEFT
             if (tmp_key > 1)
             {
                 SetCursorPosition(12, 18);
                 SetBackColor();
-                std::cout << "嗯，好的" ;
+                std::cout << STR("嗯，好的") ;
                 SetCursorPosition(20, 18);
                 SetColor(11);
-                std::cout << "不了，还是学习有意思" ;
+                std::cout << STR("不了，还是学习有意思") ;
                 --tmp_key;
             }
             break;
 
-        case 77://RIGHT
+        case KEY_RIGHT://RIGHT
             if (tmp_key < 2)
             {
                 SetCursorPosition(20, 18);
                 SetBackColor();
-                std::cout << "不了，还是学习有意思" ;
+                std::cout << STR("不了，还是学习有意思") ;
                 SetCursorPosition(12, 18);
                 SetColor(11);
-                std::cout << "嗯，好的" ;
+                std::cout << STR("嗯，好的") ;
                 ++tmp_key;
             }
             break;
 
-        case 13://Enter
+        case KEY_ENTER://Enter
             flag = true;
             break;
 

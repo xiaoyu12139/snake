@@ -25,7 +25,7 @@ public:
     bool ChangeDirection();
     bool GetFood(const Food&);
     bool GetBigFood(Food&);
-private:
+public:
     std::deque<Point> snake;
     Direction direction;
     friend class Food;//将Food类置为友元，以便访问其私有元素

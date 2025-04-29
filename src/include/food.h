@@ -13,7 +13,7 @@ public:
     void FlashBigFood();
     bool GetBigFlag();
     int GetProgressBar();
-private:
+public:
     int cnt;
     bool flash_flag;//闪烁标记
     bool big_flag;//是否有限时食物标记

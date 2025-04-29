@@ -1,7 +1,15 @@
 #include "snake.h"
+#ifdef _WIN32
 #include <conio.h>
+#else
+#include "conio_linux.h"
+#endif
 #include "tools.h"
 #include <iostream>
+
+#ifdef __linux__
+
+#endif
 
 void Snake::InitSnake()//初始化蛇
 {
@@ -32,6 +40,7 @@ void Snake::Move()//蛇增长
     }
     SetColor(14);
     snake.back().PrintCircular();
+    
 }
 
 void Snake::NormalMove()//蛇正常移动，头增长，尾缩短
@@ -72,39 +81,34 @@ bool Snake::ChangeDirection()//改变方向
     char ch;
     if (kbhit())//kbhit函数返回值为两个，需注意
     {
-        ch = getch();
+        // SetColor(3);
+        // SetCursorPosition(snake.at(0).GetX(),snake.at(0).GetY() - 1);
+        // std::cout << "  ";
+        ch = getKeyCode();
         switch (ch)
         {
-        case -32:
-            ch = getch();
-            switch (ch)
-            {
-            case 72:
+            case KEY_UP:
                 if (direction != Direction::DOWN)//如果方向与当前运动方向相反，无效
                     direction = Direction::UP;
+                    
                 break;
-            case 80:
+            case KEY_DOWN:
                 if (direction != Direction::UP)
                     direction = Direction::DOWN;
                 break;
-            case 75:
+            case KEY_LEFT:
                 if (direction != Direction::RIGHT)
                     direction = Direction::LEFT;
                 break;
-            case 77:
+            case KEY_RIGHT:
                 if (direction != Direction::LEFT)
                     direction = Direction::RIGHT;
                 break;
+            case KEY_ESC://ESC
+                return false;
+
             default:
-                break;
-            }
-            return true;
-
-        case 27://ESC
-            return false;
-
-        default:
-            return true;
+                return true;
 
         }
     }
