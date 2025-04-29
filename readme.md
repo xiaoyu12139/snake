@@ -103,6 +103,6 @@ sudo snap install --classic code
 
 在linux平台使用wasd代替方向键
 
-![image](https://github.com/xiaoyu12139/snake/blob/master/resource/linux%E6%BC%94%E7%A4%BA.gif)
+![image](https://github.com/xiaoyu12139/snake/blob/master/resource/linux_show.gif)
 
-![image](https://github.com/xiaoyu12139/snake/blob/master/resource/windows%E6%BC%94%E7%A4%BA.gif)
+![image](https://github.com/xiaoyu12139/snake/blob/master/resource/windows_show.gif)
