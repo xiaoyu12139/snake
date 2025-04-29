@@ -1,3 +1,13 @@
+#### 介绍
+
+windows+linux兼容版本的控制台简易贪吃蛇程序
+
+linux环境为：Ubuntu 24.04.2 LTS
+
+windows：Microsoft Windows [版本 10.0.22621.2283]
+
+windows上使用vs2022，linux上使用vscode
+
 > 2025/4/27 14:50:04
 
 ##### windows下编译
@@ -101,8 +111,8 @@ sudo snap install --classic code
 | W,S,A,D |         | 87,83,65,68    |
 |         |         |                |
 
-在linux平台使用wasd代替方向键
+在linux平台使用wasd代替方向键resource/linux_show.gif
 
-![image](https://github.com/xiaoyu12139/snake/blob/master/resource/linux_show.gif)
+![image](https://raw.githubusercontent.com/xiaoyu12139/snake/master/resource/linux_show.gif)
 
-![image](https://github.com/xiaoyu12139/snake/blob/master/resource/windows_show.gif)
+![image](https://raw.githubusercontent.com/xiaoyu12139/snake/master/resource/windows_show.gif)
