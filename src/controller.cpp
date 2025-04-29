@@ -261,25 +261,27 @@ int Controller::PlayGame()//游戏二级循环
             }
         }
         //clear map
-        for(int x = 2; x < 30; x ++){
-            for (int y = 2; y < 30; y ++){
-                Point p(x,y);
+#ifdef __linux__
+        for (int x = 2; x < 30; x++) {
+            for (int y = 2; y < 30; y++) {
+                Point p(x, y);
                 bool flag = false;
                 for (auto& point : csnake->snake)
                 {
-                    if(p == point){
+                    if (p == point) {
                         flag = true;
                     }
                 }
-                if(p.GetX() == cfood->x && p.GetY() == cfood->y){
+                if (p.GetX() == cfood->x && p.GetY() == cfood->y) {
                     flag = true;
                 }
-                if(!flag){
-                    SetCursorPosition(x,y);
+                if (!flag) {
+                    SetCursorPosition(x, y);
                     std::cout << " ";
                 }
             }
         }
+#endif
         if (csnake->GetFood(*cfood)) //吃到食物
         {
             csnake->Move();//蛇增长

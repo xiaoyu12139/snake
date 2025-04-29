@@ -2,6 +2,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <stdio.h>
+#include <conio.h>
 #else
 #include "conio_linux.h"
 #endif
@@ -92,6 +93,7 @@ int getKeyCode(){
     int ch0 = getch();
     #ifdef _WIN32
         if(ch0 == 224){//·½Ïò
+            int ch1 = getch();
             switch (ch1) {
                 case 72: return KEY_UP;
                 case 80: return KEY_DOWN;
@@ -99,12 +101,14 @@ int getKeyCode(){
                 case 75: return KEY_LEFT;
                 default: return KEY_ERROR;
             }
-        }else{
-            switch (ch0) {
-                case 27: return KEY_ESC;
-                case 13: return KEY_ENTER;
-                default: return KEY_ERROR;
-            }
+        }else if(ch0 == 13){
+            return KEY_ENTER;
+        }
+        else if (ch0 == 27) {
+            return KEY_ESC;
+        }
+        else {
+            return KEY_ERROR;
         }
         return getch();
     #else
